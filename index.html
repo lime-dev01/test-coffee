@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Méridien — Torréfacteur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,540;1,9..144,420&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">Méridien</div>
+  <nav><a href="#monde">Carte</a><a href="#ethiopie">Origines</a><a href="#methodes">Méthodes</a><a href="#contact">Contact</a></nav>
+</header>
+
+<section id="hero">
+  <span class="eyebrow">Torréfacteur, micro-lots de saison</span>
+  <h1>Un café,<br><em>une latitude</em>.</h1>
+  <p>Trois origines, trois torréfactions, trois récits. Chaque café raconte le climat, le sol et la main qui l'a cultivé.</p>
+  <a class="scroll" href="#monde">Explorer la carte ↓</a>
+</section>
+
+<!-- ============ CARTE DU MONDE ============ -->
+<section id="monde">
+  <div class="monde-head">
+    <span class="label">Les origines</span>
+    <h2>D'où vient <em>votre tasse</em></h2>
+    <p>Trois exploitations, une torréfaction à Marseille. Cliquez sur un point pour vous en approcher.</p>
+  </div>
+
+  <div class="mapwrap" id="mapwrap">
+    <svg id="worldsvg" viewBox="0 10 360 138" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path id="land" fill="none"/>
+      <g id="routes"></g>
+    </svg>
+    <div class="markers" id="markers"></div>
+
+    <aside class="fiche" id="fiche" aria-live="polite">
+      <button class="fiche-close" id="ficheClose" aria-label="Retour à la carte">×</button>
+      <span class="f-num" id="fNum"></span>
+      <h3 id="fName"></h3>
+      <span class="f-region" id="fRegion"></span>
+      <dl class="f-specs" id="fSpecs"></dl>
+      <div class="f-notes" id="fNotes"></div>
+      <p id="fDesc"></p>
+      <div class="f-foot">
+        <span class="f-price" id="fPrice"></span>
+        <a class="f-cta" href="#contact">Ajouter à l'abonnement</a>
+      </div>
+      <div class="f-nav">
+        <button id="fPrev">← Précédent</button>
+        <button id="fMap">Vue monde</button>
+        <button id="fNext">Suivant →</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <p class="hint" id="hint">Cliquer un point, ou choisir une origine ci-dessus</p>
+</section>
+
+<!-- ============ ORIGINES EN LIQUIDE ============ -->
+<section class="origin" id="ethiopie" style="--c1:#3a2415; --c2:#c9782f;">
+  <div class="liquid"><div class="level"><svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg><svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg><div class="body"></div></div></div>
+  <div class="inner">
+    <span class="num">01 — Éthiopie, Guji</span>
+    <h2>Floral et<br>lumineux</h2>
+    <p>Cultivé entre 1900 et 2200 mètres, lavé, séché lentement au soleil. Une tasse claire, presque parfumée — bergamote et fleur d'oranger en tête.</p>
+    <div class="notes"><span>Bergamote</span><span>Fleur d'oranger</span><span>Thé noir</span></div>
+  </div>
+</section>
+
+<section class="origin" id="colombie" style="--c1:#c9782f; --c2:#7a2420;">
+  <div class="liquid"><div class="level"><svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg><svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg><div class="body"></div></div></div>
+  <div class="inner">
+    <span class="num">02 — Colombie, Huila</span>
+    <h2>Rond et<br>fruité</h2>
+    <p>Fermentation longue, séchage sur lits africains. Un corps généreux, une acidité mûre — fruits rouges et sucre de canne.</p>
+    <div class="notes"><span>Cerise</span><span>Sucre de canne</span><span>Cacao</span></div>
+  </div>
+</section>
+
+<section class="origin" id="sumatra" style="--c1:#7a2420; --c2:#241a14;">
+  <div class="liquid"><div class="level"><svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg><svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg><div class="body"></div></div></div>
+  <div class="inner">
+    <span class="num">03 — Sumatra, Mandheling</span>
+    <h2>Terreux et<br>profond</h2>
+    <p>Méthode giling basah, torréfaction plus poussée. Corps épais, faible acidité — bois humide, épices douces, un fond de chocolat noir.</p>
+    <div class="notes"><span>Bois humide</span><span>Épices</span><span>Chocolat noir</span></div>
+  </div>
+</section>
+
+<section id="methodes">
+  <h2>Comment le préparer</h2>
+  <p>Trois méthodes, trois textures — choisissez selon l'origine.</p>
+  <div class="grid">
+    <a href="#monde"><span class="n">Filtre</span><span class="p">Révèle les origines florales — idéal pour l'Éthiopie.</span></a>
+    <a href="#monde"><span class="n">Cafetière à piston</span><span class="p">Corps plein, pour la rondeur de la Colombie.</span></a>
+    <a href="#monde"><span class="n">Espresso</span><span class="p">Concentre la profondeur du Sumatra.</span></a>
+  </div>
+</section>
+
+<footer id="contact">
+  <h2>Recevoir Méridien chez soi</h2>
+  <p style="margin:0 auto;">Abonnement mensuel, un sachet, une origine, torréfié la semaine de l'envoi.</p>
+  <div class="row">
+    <span>bonjour@meridien-cafe.fr</span>
+    <span>Marseille, France</span>
+    <span>Méridien — marque fictive de démonstration</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
