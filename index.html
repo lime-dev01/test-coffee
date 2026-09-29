@@ -23,7 +23,7 @@
   <a class="scroll" href="#monde">Explorer la carte ↓</a>
 </section>
 
-<!-- ============ CARTE DU MONDE ============ -->
+<!-- ============ CARTE DU MONDE (Corrigée, plus de rectangle noir) ============ -->
 <section id="monde">
   <div class="monde-head">
     <span class="label">Les origines</span>
@@ -32,8 +32,24 @@
   </div>
 
   <div class="mapwrap" id="mapwrap">
-    <svg id="worldsvg" viewBox="0 10 360 138" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path id="land" fill="none"/>
+    <svg id="worldsvg" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="mapGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#221812" />
+          <stop offset="100%" stop-color="#0a0807" />
+        </radialGradient>
+      </defs>
+      <rect width="1000" height="400" fill="url(#mapGlow)" />
+      <!-- Grille architecturale de fond -->
+      <g stroke="rgba(244,238,226,0.06)" stroke-width="1" stroke-dasharray="4 8">
+        <line x1="0" y1="100" x2="1000" y2="100" />
+        <line x1="0" y1="200" x2="1000" y2="200" />
+        <line x1="0" y1="300" x2="1000" y2="300" />
+        <line x1="250" y1="0" x2="250" y2="400" />
+        <line x1="500" y1="0" x2="500" y2="400" />
+        <line x1="750" y1="0" x2="750" y2="400" />
+      </g>
+      <path id="land" fill="rgba(244,238,226,0.03)" stroke="rgba(244,238,226,0.2)" stroke-width="1.5" d="M150,120 Q180,90 220,110 T300,100 T400,150 T600,120 T800,130 T850,200 T750,280 T600,300 T400,280 T250,250 Z"/>
       <g id="routes"></g>
     </svg>
     <div class="markers" id="markers"></div>
@@ -64,7 +80,11 @@
 
 <!-- ============ ORIGINES EN LIQUIDE ============ -->
 <section class="origin" id="ethiopie" style="--c1:#3a2415; --c2:#c9782f;">
-  <div class="liquid"><div class="level"><svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg><svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg><div class="body"></div></div></div>
+  <div class="liquid"><div class="level">
+    <svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg>
+    <svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg>
+    <div class="body"></div>
+  </div></div>
   <div class="inner">
     <span class="num">01 — Éthiopie, Guji</span>
     <h2>Floral et<br>lumineux</h2>
@@ -74,7 +94,11 @@
 </section>
 
 <section class="origin" id="colombie" style="--c1:#c9782f; --c2:#7a2420;">
-  <div class="liquid"><div class="level"><svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg><svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg><div class="body"></div></div></div>
+  <div class="liquid"><div class="level">
+    <svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg>
+    <svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg>
+    <div class="body"></div>
+  </div></div>
   <div class="inner">
     <span class="num">02 — Colombie, Huila</span>
     <h2>Rond et<br>fruité</h2>
@@ -84,7 +108,11 @@
 </section>
 
 <section class="origin" id="sumatra" style="--c1:#7a2420; --c2:#241a14;">
-  <div class="liquid"><div class="level"><svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg><svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg><div class="body"></div></div></div>
+  <div class="liquid"><div class="level">
+    <svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg>
+    <svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg>
+    <div class="body"></div>
+  </div></div>
   <div class="inner">
     <span class="num">03 — Sumatra, Mandheling</span>
     <h2>Terreux et<br>profond</h2>
