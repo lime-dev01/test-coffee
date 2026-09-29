@@ -11,9 +11,9 @@
 </head>
 <body>
 
-  <!-- En-tête (Se masque automatiquement à l'ouverture d'un café) -->
+  <!-- Navigation principale -->
   <header id="mainHeader">
-    <div class="logo">Méridien</div>
+    <div class="logo">MÉRIDIEN</div>
     <nav>
       <a href="#monde">Carte</a>
       <a href="#ethiopie">Origines</a>
@@ -22,7 +22,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section id="hero">
     <span class="eyebrow">Torréfaction artisanale • Micro-lots de saison</span>
     <h1>Un café,<br><em>une latitude</em>.</h1>
@@ -30,15 +30,15 @@
     <a class="scroll" href="#monde">Explorer la carte interactive ↓</a>
   </section>
 
-  <!-- Carte du monde interactive -->
+  <!-- Carte & Filtres -->
   <section id="monde">
     <div class="monde-head">
       <span class="label">Atlas du café</span>
       <h2>D'où vient <em>votre tasse</em></h2>
-      <p>Sélectionnez un terroir ci-dessous ou cliquez directement sur un marqueur de la carte.</p>
+      <p>Cliquez sur un marqueur ou sélectionnez un terroir ci-dessous</p>
     </div>
 
-    <!-- Filtres / Chips séparés du menu haut -->
+    <!-- Chips / Filtres bien séparés -->
     <div class="chips-wrapper">
       <div class="chips" id="chips"></div>
     </div>
@@ -54,7 +54,7 @@
 
         <rect width="1000" height="400" fill="url(#mapGlow)" />
 
-        <!-- Grille cartographique -->
+        <!-- Grille -->
         <g stroke="rgba(244,238,226,0.05)" stroke-width="1" stroke-dasharray="3 6">
           <line x1="0" y1="100" x2="1000" y2="100" />
           <line x1="0" y1="200" x2="1000" y2="200" />
@@ -64,7 +64,7 @@
           <line x1="750" y1="0" x2="750" y2="400" />
         </g>
 
-        <!-- Continents vectoriels -->
+        <!-- Continents simplifiés -->
         <path id="land" fill="rgba(244,238,226,0.08)" stroke="rgba(244,238,226,0.18)" stroke-width="1" stroke-linejoin="round"
           d="M150,90 L210,80 L280,100 L310,130 L250,160 L210,140 L160,110 Z 
              M260,200 L310,210 L340,260 L300,340 L260,310 L240,240 Z 
@@ -74,13 +74,12 @@
              M760,210 L840,210 L860,260 L780,250 Z 
              M800,280 L880,290 L870,350 L800,340 Z" />
 
-        <!-- Arcs de routes SVG générés en JS -->
         <g id="routes"></g>
       </svg>
 
       <div class="markers" id="markers"></div>
 
-      <!-- Fiche Tiroir Produit -->
+      <!-- Fiche tiroir du produit -->
       <aside class="fiche" id="fiche" aria-live="polite">
         <button class="fiche-close" id="ficheClose" aria-label="Fermer la fiche">✕</button>
         <span class="f-num" id="fNum">01</span>
@@ -110,7 +109,7 @@
   </section>
 
   <!-- Origine 1 : Éthiopie -->
-  <section class="origin" id="ethiopie" style="--wave-color: #c9782f; --bg-bottom: #120b07;">
+  <section class="origin" id="ethiopie" style="--bg-bottom: #120b07;">
     <div class="liquid">
       <div class="bubbles"></div>
       <div class="level">
@@ -118,7 +117,7 @@
           <defs>
             <linearGradient id="gradEth2" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="#c9782f" stop-opacity="0.45" />
-              <stop offset="100%" stop-color="#120b07" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#120b07" stop-opacity="0.95" />
             </linearGradient>
           </defs>
           <path fill="url(#gradEth2)" d="M0,30 C320,90 420,-10 720,40 C1020,90 1120,0 1440,30 L1440,120 L0,120 Z" />
@@ -140,13 +139,13 @@
     <div class="inner">
       <span class="num">01 — Éthiopie, Guji</span>
       <h2>Floral &amp;<br>lumineux</h2>
-      <p>Cultivé entre 1900 et 2200 mètres d'altitude. Séchage lent au soleil pour offrir une tasse d'une pureté cristalline.</p>
+      <p>Cultivé entre 1900 et 2200 mètres d'altitude, lavé puis séché lentement au soleil sur des tables suspendues. Une tasse d'une clarté cristalline.</p>
       <div class="notes"><span>Bergamote</span><span>Fleur d'oranger</span><span>Thé noir</span></div>
     </div>
   </section>
 
   <!-- Origine 2 : Colombie -->
-  <section class="origin" id="colombie" style="--wave-color: #a6532b; --bg-bottom: #0f0906;">
+  <section class="origin" id="colombie" style="--bg-bottom: #0f0906;">
     <div class="liquid">
       <div class="bubbles"></div>
       <div class="level">
@@ -154,7 +153,7 @@
           <defs>
             <linearGradient id="gradCol2" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="#a6532b" stop-opacity="0.45" />
-              <stop offset="100%" stop-color="#0f0906" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#0f0906" stop-opacity="0.95" />
             </linearGradient>
           </defs>
           <path fill="url(#gradCol2)" d="M0,40 C360,-10 500,80 720,30 C940,-20 1080,70 1440,30 L1440,120 L0,120 Z" />
@@ -176,13 +175,13 @@
     <div class="inner">
       <span class="num">02 — Colombie, Huila</span>
       <h2>Rond &amp;<br>gourmand</h2>
-      <p>Fermentation délicate sous-vide de 48h. Révèle des arômes intenses de sucre roux et de fruits rouges de saison.</p>
+      <p>Fermentation anaérobie contrôlée de 48 heures. Révèle des arômes intenses de sucre panela et de fruits rouges de saison.</p>
       <div class="notes"><span>Cerise noire</span><span>Sucre panela</span><span>Cacao brut</span></div>
     </div>
   </section>
 
   <!-- Origine 3 : Sumatra -->
-  <section class="origin" id="sumatra" style="--wave-color: #6e3a20; --bg-bottom: #0b0705;">
+  <section class="origin" id="sumatra" style="--bg-bottom: #0b0705;">
     <div class="liquid">
       <div class="bubbles"></div>
       <div class="level">
@@ -190,7 +189,7 @@
           <defs>
             <linearGradient id="gradSum2" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="#6e3a20" stop-opacity="0.45" />
-              <stop offset="100%" stop-color="#0b0705" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#0b0705" stop-opacity="0.95" />
             </linearGradient>
           </defs>
           <path fill="url(#gradSum2)" d="M0,30 C280,80 480,-10 720,30 C960,70 1160,0 1440,30 L1440,120 L0,120 Z" />
@@ -212,7 +211,7 @@
     <div class="inner">
       <span class="num">03 — Sumatra, Mandheling</span>
       <h2>Terreux &amp;<br>captivant</h2>
-      <p>Processus traditionnel <em>Giling Basah</em>. Torréfaction robe de moine révélant un corps dense et épicé.</p>
+      <p>Processus traditionnel Giling Basah. Torréfaction robe de moine révélant un corps dense, cèdre et épices douces.</p>
       <div class="notes"><span>Cèdre noble</span><span>Épices douces</span><span>Chocolat noir</span></div>
     </div>
   </section>
@@ -224,15 +223,15 @@
     <div class="grid">
       <a href="#ethiopie">
         <span class="n">Méthode Douce / V60</span>
-        <span class="p">Laisse s'exprimer la délicatesse florale et fruitée de l'Éthiopie.</span>
+        <span class="p">Laisse s'exprimer la délicatesse florale de l'Éthiopie.</span>
       </a>
       <a href="#colombie">
         <span class="n">Cafetière Piston</span>
-        <span class="p">Extrait la rondeur et la sucrosité naturelle du terroir colombien.</span>
+        <span class="p">Extrait la rondeur et la sucrosité du terroir colombien.</span>
       </a>
       <a href="#sumatra">
         <span class="n">Espresso Artisanal</span>
-        <span class="p">Dévoile la crema dense et les épices envoûtantes du Sumatra.</span>
+        <span class="p">Dévoile la crema dense et les épices du Sumatra.</span>
       </a>
     </div>
   </section>
@@ -242,7 +241,7 @@
     <p>Abonnement sur-mesure sans engagement. Recevez nos derniers micro-lots fraîchement torréfiés.</p>
     <div class="row">
       <span>contact@meridien-cafe.fr</span>
-      <span>Atelier Méridien — Marseille, France</span>
+      <span>Atelier Méridien — Marseille</span>
       <span>© Méridien Torréfacteur</span>
     </div>
   </footer>
