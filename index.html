@@ -4,107 +4,493 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MÉRIDIEN — Torréfacteur</title>
-  
-  <!-- Polices Google Fonts -->
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Feuille de style CSS -->
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* -------------------------------------------------------------
+       1. VARIABLES & PALETTE CHAUDE (AUCUN NOIR FROID)
+    ------------------------------------------------------------- */
+    :root {
+      --bg-espresso-dark: #190e08;
+      --bg-espresso-mid: #2a160d;
+      --bg-liquid-top: #8a481a;
+      --bg-liquid-bottom: #3d1c0b;
+      --accent-amber: #c87a32;
+      --accent-gold: #e59b4c;
+      --text-bright: #f8f1eb;
+      --text-muted: #c4a896;
+      --pill-bg: rgba(65, 33, 17, 0.75);
+      --pill-border: rgba(229, 155, 76, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0d0704;
+      color: var(--text-bright);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* CONTENEUR PRINCIPAL APPLI MOBILE */
+    .app-container {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background-color: var(--bg-espresso-dark);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.85);
+    }
+
+    /* -------------------------------------------------------------
+       2. HEADER & MENU (SE MASQUE AUTOMATIQUEMENT)
+    ------------------------------------------------------------- */
+    .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 18px 20px 14px;
+      background: linear-gradient(180deg, rgba(25, 14, 8, 0.98) 75%, rgba(25, 14, 8, 0) 100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    /* Quand la fiche est active : le menu glisse vers le haut et s'efface */
+    .app-container.product-active .site-header {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .brand-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--text-bright);
+      font-weight: 600;
+    }
+
+    .terroir-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .terroir-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .terroir-pill.active {
+      background: rgba(200, 122, 50, 0.25);
+      border-color: var(--accent-amber);
+      color: var(--text-bright);
+    }
+
+    .header-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      opacity: 0.85;
+      text-align: center;
+    }
+
+    /* -------------------------------------------------------------
+       3. BOUTON FERMER (DÉGAGÉ ET ACCESSIBLE)
+    ------------------------------------------------------------- */
+    .close-product-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 30;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(40, 21, 12, 0.75);
+      border: 1px solid var(--pill-border);
+      color: var(--text-bright);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    .close-product-btn:active {
+      transform: scale(0.92);
+    }
+
+    .app-container.product-active .close-product-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* -------------------------------------------------------------
+       4. SECTION FOND / CARTE INTERACTIVE
+    ------------------------------------------------------------- */
+    .map-bg {
+      height: 260px;
+      background: radial-gradient(circle at 50% 40%, #3a1e12 0%, var(--bg-espresso-dark) 80%);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .map-pin {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pin-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-gold);
+      border-radius: 50%;
+    }
+
+    .pin-pulse {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--accent-gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite ease-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* -------------------------------------------------------------
+       5. FICHE PRODUIT / LIQUIDE AVEC VAGUES CONTINUES
+    ------------------------------------------------------------- */
+    .product-sheet {
+      margin-top: -50px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 5;
+      flex-grow: 1;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Si fermée : la fiche glisse vers le bas */
+    .app-container:not(.product-active) .product-sheet {
+      transform: translateY(calc(100% - 100px));
+    }
+
+    .wave-container {
+      width: 100%;
+      height: 85px;
+      margin-bottom: -2px;
+      overflow: hidden;
+    }
+
+    .wave-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .liquid-body {
+      background: linear-gradient(
+        180deg, 
+        var(--bg-liquid-top) 0%, 
+        #6e3613 25%, 
+        #4c220a 65%, 
+        var(--bg-liquid-bottom) 100%
+      );
+      padding: 10px 24px 45px;
+      position: relative;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* BULLES DYNAMIQUES DANS LE LIQUIDE */
+    .bubbles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .b {
+      position: absolute;
+      bottom: -15px;
+      background: rgba(229, 155, 76, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      animation: bubbleUp 5s infinite ease-in;
+    }
+
+    .b1 { left: 18%; width: 7px; height: 7px; animation-duration: 4.8s; }
+    .b2 { left: 42%; width: 11px; height: 11px; animation-duration: 6.2s; animation-delay: 1.2s; }
+    .b3 { left: 68%; width: 6px; height: 6px; animation-duration: 4.2s; animation-delay: 0.5s; }
+    .b4 { left: 82%; width: 9px; height: 9px; animation-duration: 5.8s; animation-delay: 2.1s; }
+    .b5 { left: 28%; width: 5px; height: 5px; animation-duration: 5.0s; animation-delay: 2.8s; }
+
+    @keyframes bubbleUp {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 0.7; }
+      100% { transform: translateY(-260px); opacity: 0; }
+    }
+
+    .product-details {
+      position: relative;
+      z-index: 2;
+    }
+
+    .product-number {
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      line-height: 1.12;
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 18px;
+    }
+
+    .product-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(248, 241, 235, 0.88);
+      margin-bottom: 26px;
+      font-weight: 300;
+    }
+
+    .aroma-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .aroma-pill {
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      color: var(--text-bright);
+      padding: 9px 18px;
+      border-radius: 22px;
+      font-size: 0.82rem;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="app-container" id="app">
+  <div class="app-container product-active" id="app">
     
-    <!-- HEADER ET MENU (SE MASQUE AUTOMATIQUEMENT SI FICHE OUVERTE) -->
+    <!-- HEADER ET NAVIGATION EN HAUT -->
     <header class="site-header" id="siteHeader">
-      <nav class="nav-main">
+      <div class="header-top">
         <div class="brand-logo">MÉRIDIEN</div>
-        <ul class="nav-links">
-          <li><a href="#" class="active">Carte</a></li>
-          <li><a href="#">Origines</a></li>
-          <li><a href="#">Méthodes</a></li>
-          <li><a href="#">Abonnement</a></li>
-        </ul>
-      </nav>
-      
-      <div class="terroir-filters">
-        <button class="filter-chip active" data-terroir="ethiopie">Éthiopie</button>
-        <button class="filter-chip" data-terroir="colombie">Colombie</button>
-        <button class="filter-chip" data-terroir="sumatra">Sumatra</button>
+        <nav class="nav-menu">
+          <a href="#" class="nav-item active">Carte</a>
+          <a href="#" class="nav-item">Origines</a>
+          <a href="#" class="nav-item">Méthodes</a>
+          <a href="#" class="nav-item">Abonnement</a>
+        </nav>
       </div>
+      
+      <div class="terroir-bar">
+        <button class="terroir-pill active" data-terroir="ethiopie">Éthiopie</button>
+        <button class="terroir-pill" data-terroir="colombie">Colombie</button>
+        <button class="terroir-pill" data-terroir="sumatra">Sumatra</button>
+      </div>
+      
+      <p class="header-subtitle">Cliquez sur un marqueur ou sélectionnez un terroir ci-dessus</p>
     </header>
 
-    <!-- SECTION CARTE ET SÉLECTION -->
-    <main class="map-section">
-      <p class="map-instruction">Cliquez sur un marqueur ou sélectionnez un terroir ci-dessus</p>
+    <!-- BOUTON DE FERMETURE DÉGAGÉ (✕) -->
+    <button class="close-product-btn" id="closeBtn" title="Fermer la fiche">✕</button>
 
-      <!-- CARTE APERÇU D'UN CAFÉ -->
-      <div class="coffee-card-preview" id="openProductBtn">
-        <div class="preview-info">
-          <span class="preview-number">01 — GUJI</span>
-          <h3 class="preview-title">Éthiopie Floral & Lumineux</h3>
-        </div>
-        <div class="preview-arrow">→</div>
+    <!-- CARTE INTERACTIVE -->
+    <main class="map-bg" id="mapBg">
+      <div class="map-pin" style="top: 35%; left: 48%;">
+        <span class="pin-pulse"></span>
+        <span class="pin-dot"></span>
       </div>
     </main>
 
-    <!-- FICHE PRODUIT OVERLAY (LIQUIDE & VAGUES CONTINUES) -->
-    <div class="product-modal" id="productModal">
+    <!-- FICHE PRODUIT / LIQUIDE CONTINU -->
+    <section class="product-sheet" id="productSheet">
       
-      <!-- BOUTON FERMER EXCLUSIF -->
-      <button class="close-btn" id="closeProductBtn" aria-label="Fermer la fiche">✕</button>
-
-      <div class="liquid-wrapper">
-        
-        <!-- VAGUES SVG AVEC DÉGRADÉ ADOUCI -->
-        <svg class="wave-divider" viewBox="0 0 500 120" preserveAspectRatio="none">
+      <!-- VAGUES SVG EN DÉGRADÉ ADOUCI -->
+      <div class="wave-container">
+        <svg viewBox="0 0 500 120" preserveAspectRatio="none" class="wave-svg">
           <defs>
-            <linearGradient id="waveGradFront" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#31190f" stop-opacity="0" />
-              <stop offset="35%" stop-color="#b06126" stop-opacity="0.85" />
+            <linearGradient id="amberWaveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#24130b" stop-opacity="0" />
+              <stop offset="30%" stop-color="#c87a32" stop-opacity="0.85" />
               <stop offset="100%" stop-color="#8a481a" stop-opacity="1" />
             </linearGradient>
-            <linearGradient id="waveGradBack" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#e59b4c" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#6e3712" stop-opacity="0.7" />
+            <linearGradient id="amberWaveBack" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#e59b4c" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#4a2411" stop-opacity="0.9" />
             </linearGradient>
           </defs>
-
-          <path d="M0,60 C160,95 340,15 500,55 L500,120 L0,120 Z" fill="url(#waveGradBack)" />
-          <path d="M0,40 C130,10 270,70 500,30 L500,120 L0,120 Z" fill="url(#waveGradFront)" />
+          <path d="M0,50 C150,90 350,10 500,45 L500,120 L0,120 Z" fill="url(#amberWaveBack)" />
+          <path d="M0,35 C120,5 280,65 500,25 L500,120 L0,120 Z" fill="url(#amberWaveGrad)" />
         </svg>
+      </div>
 
-        <!-- CORPS DU LIQUIDE AVEC BULLES ANIMÉES -->
-        <div class="liquid-content">
-          <div class="bubbles-container">
-            <span class="bubble b1"></span>
-            <span class="bubble b2"></span>
-            <span class="bubble b3"></span>
-            <span class="bubble b4"></span>
-            <span class="bubble b5"></span>
-          </div>
-
-          <div class="product-number">01 — ÉTHIOPIE, GUJI</div>
-          <h1 class="product-title">Floral &<br>lumineux</h1>
-          <p class="product-description">
-            Cultivé entre 1900 et 2200 mètres d'altitude, lavé puis séché lentement au soleil sur des tables suspendues. Une tasse d'une clarté cristalline.
-          </p>
-          
-          <div class="aroma-tags">
-            <span class="tag-pill">Bergamote</span>
-            <span class="tag-pill">Fleur d'oranger</span>
-            <span class="tag-pill">Thé noir</span>
-          </div>
+      <!-- LIQUIDE & BULLES -->
+      <div class="liquid-body">
+        <div class="bubbles">
+          <span class="b b1"></span>
+          <span class="b b2"></span>
+          <span class="b b3"></span>
+          <span class="b b4"></span>
+          <span class="b b5"></span>
         </div>
 
+        <div class="product-details">
+          <span class="product-number" id="pNumber">01 — ÉTHIOPIE, GUJI</span>
+          <h1 class="product-title" id="pTitle">Floral &<br>lumineux</h1>
+          
+          <p class="product-desc" id="pDesc">
+            Cultivé entre 1900 et 2200 mètres d'altitude, lavé puis séché lentement au soleil sur des tables suspendues. Une tasse d'une clarté cristalline.
+          </p>
+
+          <div class="aroma-list" id="pAromas">
+            <span class="aroma-pill">Bergamote</span>
+            <span class="aroma-pill">Fleur d'oranger</span>
+            <span class="aroma-pill">Thé noir</span>
+          </div>
+        </div>
       </div>
-    </div>
+
+    </section>
 
   </div>
 
-  <!-- Fichier JavaScript -->
-  <script src="script.js"></script>
+  <!-- JAVASCRIPT INTÉGRÉ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const app = document.getElementById('app');
+      const closeBtn = document.getElementById('closeBtn');
+      const mapBg = document.getElementById('mapBg');
+      const terroirPills = document.querySelectorAll('.terroir-pill');
+
+      // Données dynamiques des cafés
+      const coffees = {
+        ethiopie: {
+          number: "01 — ÉTHIOPIE, GUJI",
+          title: "Floral &<br>lumineux",
+          desc: "Cultivé entre 1900 et 2200 mètres d'altitude, lavé puis séché lentement au soleil sur des tables suspendues. Une tasse d'une clarté cristalline.",
+          aromas: ["Bergamote", "Fleur d'oranger", "Thé noir"]
+        },
+        colombie: {
+          number: "02 — COLOMBIE, HUILA",
+          title: "Gourmand &<br>équilibré",
+          desc: "Cultivé dans les hautes vallées de Huila, séché sur lits africains. Notes intenses de chocolat, caramel mou et finale de noisette grillée.",
+          aromas: ["Chocolat noir", "Caramel", "Noisette"]
+        },
+        sumatra: {
+          number: "03 — SUMATRA, GAYO",
+          title: "Épicé &<br>corpulent",
+          desc: "Issu du procédé traditionnel Giling Basah sur les plateaux de Gayo. Un corps puissant, une acidité basse et un bouquet d'épices douces.",
+          aromas: ["Cèdre", "Épices douces", "Cacao brut"]
+        }
+      };
+
+      // Clic sur la croix ✕ : ferme la fiche et réaffiche le menu
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        app.classList.remove('product-active');
+      });
+
+      // Clic sur la carte : réouvre la fiche
+      mapBg.addEventListener('click', () => {
+        app.classList.add('product-active');
+      });
+
+      // Sélection des terroirs
+      terroirPills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          terroirPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+
+          const key = pill.dataset.terroir;
+          const coffee = coffees[key];
+
+          if (coffee) {
+            document.getElementById('pNumber').textContent = coffee.number;
+            document.getElementById('pTitle').innerHTML = coffee.title;
+            document.getElementById('pDesc').textContent = coffee.desc;
+            
+            const aromaContainer = document.getElementById('pAromas');
+            aromaContainer.innerHTML = coffee.aromas
+              .map(a => `<span class="aroma-pill">${a}</span>`)
+              .join('');
+
+            app.classList.add('product-active');
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
