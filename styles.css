@@ -3,7 +3,6 @@
   --text: #F4EEE2;
   --line: rgba(244, 238, 226, 0.14);
   --oc: #c9782f;
-  --mc: #e8a058;
 }
 
 * {
@@ -21,16 +20,6 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-}
-
-/* Texture Grain Subtile */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 999;
 }
 
 h1, h2, h3 {
@@ -52,7 +41,7 @@ p {
   font-size: 0.95rem;
 }
 
-/* Header Fixe avec transition pour effacement */
+/* Header fixe */
 header {
   position: fixed;
   top: 0;
@@ -62,14 +51,14 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 5vw;
-  background: rgba(20, 17, 16, 0.85);
-  backdrop-filter: blur(10px);
+  padding: 18px 5vw;
+  background: rgba(20, 17, 16, 0.88);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
-  transition: transform 0.4s ease, opacity 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
-/* Cacher le header quand un produit est ouvert pour éviter tout chevauchement */
+/* Masquage propre du header dès qu'une fiche café est ouverte pour éviter tout chevauchement */
 body.drawer-open header {
   transform: translateY(-100%);
   opacity: 0;
@@ -78,9 +67,9 @@ body.drawer-open header {
 
 header .logo {
   font-family: 'Fraunces', serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
 }
 
 nav a {
@@ -117,7 +106,7 @@ nav a:hover {
 }
 
 #hero h1 {
-  font-size: clamp(2.8rem, 8vw, 6rem);
+  font-size: clamp(2.8rem, 8vw, 5.8rem);
   line-height: 1;
 }
 
@@ -132,24 +121,25 @@ nav a:hover {
   text-decoration: none;
   border-bottom: 1px solid var(--line);
   padding-bottom: 4px;
+  color: var(--text);
 }
 
-/* Section Carte & Filtres */
+/* Carte & Filtres */
 #monde {
-  padding: 12vh 5vw;
+  padding: 10vh 5vw;
   background: #0f0c0a;
 }
 
 .monde-head {
   max-width: 1200px;
-  margin: 0 auto 24px;
+  margin: 0 auto 20px;
 }
 
 .label {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #c9a06a;
+  color: var(--oc);
   display: block;
   margin-bottom: 8px;
 }
@@ -159,10 +149,10 @@ nav a:hover {
   margin-bottom: 8px;
 }
 
-/* Chips / Filtres bien séparés */
+/* Conteneur des filtres/chips séparé pour zéro chevauchement */
 .chips-wrapper {
   max-width: 1200px;
-  margin: 0 auto 24px;
+  margin: 0 auto 20px;
 }
 
 .chips {
@@ -172,14 +162,14 @@ nav a:hover {
 }
 
 .chip {
-  background: rgba(244, 238, 226, 0.04);
+  background: rgba(244, 238, 226, 0.05);
   border: 1px solid var(--line);
   color: var(--text);
   border-radius: 20px;
   padding: 8px 18px;
   font-size: 0.82rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .chip:hover, .chip.active {
@@ -189,7 +179,7 @@ nav a:hover {
   font-weight: 600;
 }
 
-/* Conteneur de carte SVG */
+/* Carte SVG */
 .mapwrap {
   position: relative;
   max-width: 1200px;
@@ -238,7 +228,7 @@ nav a:hover {
   pointer-events: auto;
   background: none;
   border: 0;
-  padding: 10px;
+  padding: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -257,7 +247,7 @@ nav a:hover {
 .marker .dot::before {
   content: '';
   position: absolute;
-  inset: -5px;
+  inset: -4px;
   border-radius: 50%;
   border: 1px solid var(--oc);
   animation: ping 2.5s ease-out infinite;
@@ -270,8 +260,10 @@ nav a:hover {
 
 .marker .lab {
   font-size: 0.78rem;
+  color: var(--text);
   white-space: nowrap;
   text-shadow: 0 2px 6px #000;
+  text-align: left;
 }
 
 .marker .lab small {
@@ -284,10 +276,9 @@ nav a:hover {
   background: #FFF;
   box-shadow: 0 0 10px #FFF;
 }
-
 .marker.home .dot::before { display: none; }
 
-/* Tiroir Fiche Produit (Mobile First & Unifié) */
+/* Fiche Tiroir Produit */
 .fiche {
   position: absolute;
   top: 12px;
@@ -296,8 +287,8 @@ nav a:hover {
   width: min(380px, 90%);
   padding: 24px;
   overflow-y: auto;
-  background: rgba(18, 14, 12, 0.95);
-  backdrop-filter: blur(14px);
+  background: rgba(18, 14, 12, 0.96);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--line);
   border-top: 3px solid var(--oc);
   border-radius: 8px;
@@ -314,7 +305,7 @@ nav a:hover {
   opacity: 1;
 }
 
-/* Bouton Fermer Isolé et très lisible */
+/* Bouton de fermeture dédié */
 .fiche-close {
   position: absolute;
   top: 16px;
@@ -349,7 +340,7 @@ nav a:hover {
 .fiche h3 {
   font-size: 1.7rem;
   line-height: 1.1;
-  padding-right: 40px;
+  padding-right: 44px;
 }
 
 .f-region {
@@ -427,12 +418,13 @@ nav a:hover {
 .f-nav button {
   background: none;
   border: 0;
+  color: var(--text);
   cursor: pointer;
   font-size: 0.78rem;
   opacity: 0.7;
 }
 
-/* Sections Liquides Adoucies */
+/* Sections Liquides adoucies */
 section.origin {
   position: relative;
   min-height: 100svh;
@@ -494,7 +486,7 @@ section.origin {
   height: 120px;
   top: -119px;
   will-change: transform;
-  filter: drop-shadow(0 -10px 20px rgba(201, 120, 47, 0.15));
+  filter: drop-shadow(0 -8px 16px rgba(201, 120, 47, 0.18));
 }
 
 .wave.w1 {
@@ -544,7 +536,7 @@ section.origin {
   border-radius: 20px;
   padding: 6px 16px;
   font-size: 0.8rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 /* Méthodes & Footer */
@@ -575,6 +567,7 @@ section.origin {
   display: block;
   padding: 36px 20px;
   text-decoration: none;
+  color: var(--text);
   border: 1px solid var(--line);
   border-radius: 6px;
   transition: all 0.3s;
