@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     routesGroup.innerHTML = '';
     chipsContainer.innerHTML = '';
 
-    // HQ Marseille
+    // Marqueur Marseille
     const homeEl = document.createElement('div');
     homeEl.className = 'marker home';
     homeEl.style.left = `${(homeBase.x / 1000) * 100}%`;
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     homeEl.innerHTML = `<div class="dot"></div><div class="lab">Marseille<small>Atelier Méridien</small></div>`;
     markersContainer.appendChild(homeEl);
 
-    // Terroirs
+    // Marqueurs terroirs
     origins.forEach((item, index) => {
       // Trace de route SVG
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       marker.addEventListener('click', () => openOrigin(index));
       markersContainer.appendChild(marker);
 
-      // Chip
+      // Chip / Bouton filtre
       const chip = document.createElement('button');
       chip.className = 'chip';
       chip.textContent = item.name.split(',')[0];
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     notesBox.innerHTML = data.notes.map(n => `<span>${n}</span>`).join('');
 
     fiche.classList.add('open');
-    document.body.classList.add('drawer-open'); // Cacher le header haut !
+    document.body.classList.add('drawer-open'); // Cache le menu haut automatiquement
 
     document.querySelectorAll('.route-path').forEach((p, i) => {
       p.classList.toggle('active', i === index);
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeOrigin() {
     fiche.classList.remove('open');
-    document.body.classList.remove('drawer-open'); // Réafficher le header haut
+    document.body.classList.remove('drawer-open'); // Réaffiche le menu haut
     document.querySelectorAll('.route-path').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   }
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openOrigin((activeIndex + 1) % origins.length);
   });
 
-  // Animation fluide du liquide au défilement
+  // Animation liquide au scroll
   const originSections = document.querySelectorAll('section.origin');
   function updateLiquids() {
     const h = window.innerHeight;
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', updateLiquids);
 
-  // Bulles effervescentes
+  // Génération de bulles
   document.querySelectorAll('.bubbles').forEach(container => {
     for (let i = 0; i < 10; i++) {
       const b = document.createElement('div');
