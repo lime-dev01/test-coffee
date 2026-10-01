@@ -4,12 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Méridien — Torréfacteur de Micro-lots</title>
+  <meta name="description" content="Méridien, torréfacteur artisanal à Marseille. Trois origines de micro-lots — Éthiopie, Colombie, Sumatra — explorées sur une carte interactive.">
+  <meta property="og:title" content="Méridien — Torréfacteur de Micro-lots">
+  <meta property="og:description" content="Trois origines, trois latitudes. Une visite interactive du café, de la carte à la tasse.">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<div class="progress" id="progress"></div>
 
 <header>
   <div class="logo">Méridien</div>
@@ -25,7 +31,7 @@
   <span class="eyebrow">Torréfaction artisanale • Micro-lots de saison</span>
   <h1>Un café,<br><em>une latitude</em>.</h1>
   <p>Trois origines d'exception, trois profils aromatiques uniques. Chaque grain raconte le climat, le sol et la main qui l'a cultivé.</p>
-  <a class="scroll" href="#monde">Explorer la carte interactives ↓</a>
+  <a class="scroll" href="#monde">Explorer la carte interactive ↓</a>
 </section>
 
 <!-- ============ CARTE DU MONDE INTERACTIVE ============ -->
@@ -43,15 +49,10 @@
           <stop offset="0%" stop-color="#241913" />
           <stop offset="100%" stop-color="#0c0908" />
         </radialGradient>
-        <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="var(--oc)" stop-opacity="0.2" />
-          <stop offset="100%" stop-color="var(--oc)" stop-opacity="0.9" />
-        </linearGradient>
       </defs>
 
       <rect width="1000" height="400" fill="url(#mapGlow)" />
 
-      <!-- Grille cartographique / Méridiens -->
       <g class="grid-lines" stroke="rgba(244,238,226,0.05)" stroke-width="1" stroke-dasharray="3 6">
         <line x1="0" y1="100" x2="1000" y2="100" />
         <line x1="0" y1="200" x2="1000" y2="200" />
@@ -62,23 +63,21 @@
         <line x1="800" y1="0" x2="800" y2="400" />
       </g>
 
-      <!-- Continents vectoriels -->
+      <!-- Continents — contours adoucis (courbes au lieu d'angles) -->
       <path id="land" fill="rgba(244,238,226,0.07)" stroke="rgba(244,238,226,0.18)" stroke-width="1" stroke-linejoin="round"
-        d="M150,90 L210,80 L280,100 L310,130 L250,160 L210,140 L160,110 Z 
-           M260,200 L310,210 L340,260 L300,340 L260,310 L240,240 Z 
-           M470,70 L540,60 L600,90 L560,130 L480,120 L460,90 Z 
-           M460,140 L560,150 L590,210 L540,300 L470,270 L440,190 Z 
-           M600,70 L780,60 L900,110 L880,180 L750,200 L620,130 Z 
-           M760,210 L840,210 L860,260 L780,250 Z 
-           M800,280 L880,290 L870,350 L800,340 Z" />
+        d="M150,90 Q210,72 280,100 Q318,118 310,130 Q278,152 250,160 Q222,150 210,140 Q178,124 160,110 Q148,100 150,90 Z
+           M260,200 Q308,196 310,210 Q344,232 340,260 Q324,312 300,340 Q274,322 260,310 Q242,276 240,240 Q242,214 260,200 Z
+           M470,70 Q538,54 600,90 Q580,114 560,130 Q512,128 480,120 Q458,104 460,90 Q464,78 470,70 Z
+           M460,140 Q562,138 590,210 Q572,264 540,300 Q498,288 470,270 Q440,224 440,190 Q442,160 460,140 Z
+           M600,70 Q784,46 900,110 Q896,154 880,180 Q800,196 750,200 Q672,164 620,130 Q598,104 600,70 Z
+           M760,210 Q844,202 860,260 Q824,262 780,250 Q758,232 760,210 Z
+           M800,280 Q882,282 870,350 Q828,348 800,340 Q792,310 800,280 Z" />
 
-      <!-- Les trajectoires maritimes/aériennes seront générées par script.js -->
       <g id="routes"></g>
     </svg>
 
     <div class="markers" id="markers"></div>
 
-    <!-- Fiche latérale interactive -->
     <aside class="fiche" id="fiche" aria-live="polite">
       <button class="fiche-close" id="ficheClose" aria-label="Fermer la fiche">×</button>
       <span class="f-num" id="fNum">01</span>
@@ -114,9 +113,10 @@
   <div class="liquid">
     <div class="bubbles"></div>
     <div class="level">
+      <svg class="wave w3" viewBox="0 0 2880 100" preserveAspectRatio="none"><path d="M0 50 q180 -22 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V100 H0Z"/></svg>
       <svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg>
       <svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg>
-      <div class="body"></div>
+      <div class="body"><div class="crema"></div><div class="sheen"></div></div>
     </div>
   </div>
   <div class="inner">
@@ -131,9 +131,10 @@
   <div class="liquid">
     <div class="bubbles"></div>
     <div class="level">
+      <svg class="wave w3" viewBox="0 0 2880 100" preserveAspectRatio="none"><path d="M0 50 q180 -22 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V100 H0Z"/></svg>
       <svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg>
       <svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg>
-      <div class="body"></div>
+      <div class="body"><div class="crema"></div><div class="sheen"></div></div>
     </div>
   </div>
   <div class="inner">
@@ -148,9 +149,10 @@
   <div class="liquid">
     <div class="bubbles"></div>
     <div class="level">
+      <svg class="wave w3" viewBox="0 0 2880 100" preserveAspectRatio="none"><path d="M0 50 q180 -22 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V100 H0Z"/></svg>
       <svg class="wave w2" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="M0 40 q180 -36 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V80 H0Z"/></svg>
       <svg class="wave w1" viewBox="0 0 2880 70" preserveAspectRatio="none"><path d="M0 35 q180 -30 360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 t360 0 V70 H0Z"/></svg>
-      <div class="body"></div>
+      <div class="body"><div class="crema"></div><div class="sheen"></div></div>
     </div>
   </div>
   <div class="inner">
